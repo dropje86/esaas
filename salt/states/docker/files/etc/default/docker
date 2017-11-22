@@ -1,0 +1,4 @@
+{%- from 'docker/defaults.sls' import defaults with context %}# MANAGED BY SALT
+{%- for line in defaults %}
+{{ line }}
+{%- endfor %}

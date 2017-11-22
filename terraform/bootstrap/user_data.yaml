@@ -1,0 +1,2 @@
+apt_update: false
+apt_upgrade: false

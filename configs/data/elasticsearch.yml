@@ -1,0 +1,39 @@
+---
+cluster.name: ${NOMAD_META_CLUSTER}
+cluster.routing.allocation.awareness.attributes: zone
+discovery.consul:
+  healthy: false
+  service-names: ["${NOMAD_META_CLUSTER}"]
+  tag: master-transport
+  local-ws-host: http://localhost
+discovery.zen.hosts_provider: consul
+discovery.zen.fd.ping_interval: 1s
+discovery.zen.fd.ping_timeout: 5s
+discovery.zen.fd.ping_retries: 3
+discovery.zen.minimum_master_nodes: 2
+http.port: ${NOMAD_PORT_http}
+network.host: ${NOMAD_IP_http}
+node.attr.zone: ${AVAILABILITY_ZONE}
+node.master: false
+node.name: data_${NOMAD_ALLOC_ID}_${HOSTNAME}_${AVAILABILITY_ZONE}
+path.scripts: /tmp/elastic-scripts
+transport.tcp.port: ${NOMAD_PORT_transport}
+xpack.security.authc.realms:
+  file_realm:
+    type: file
+    order: 0
+  native_realm:
+    type: native
+    order: 1
+  ldap_realm:
+    type: ldap
+    order: 2
+    url: ["ldaps://ldap-1.example.com", "ldaps://ldap-2.example.com"]
+    load_balance.type: round_robin
+    user_dn_templates:
+      - "uid={0},ou=People,dc=example,dc=com"
+    group_search:
+      base_dn: "ou=Groups,dc=example,dc=com"
+      scope: one_level
+    cache.ttl: 5m
+    unmapped_groups_as_roles: true

@@ -1,0 +1,6 @@
+admin-ldap-group-name:
+  cluster: [ 'all' ]
+  run_as: [ '*' ]
+  indices:
+    - names: [ '*' ]
+      privileges: [ 'all' ]
